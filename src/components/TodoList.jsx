@@ -12,6 +12,25 @@ export default function TodoList({ loading, itemList, setItemList, setLoading}) 
   }, [])
 
 
+  const handleDone = async (item) => {
+    
+    const newItem = {
+      done: true,
+      userId: "me",
+      item: item.item, //what the user typed in is "value"
+    }
+    const response = await fetch(`https://express-deploy-dr.web.app/items/${item.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(newItem)
+    })
+    const data = await response.json()
+    setItemList(data);
+  }
+
+
   return(
     <section>
       <List
@@ -20,7 +39,7 @@ export default function TodoList({ loading, itemList, setItemList, setLoading}) 
         loading={loading}
         size='large'
         renderItem={(task) => (
-          <List.Item className={(task.done) && 'done'}>
+          <List.Item onClick={() => {handleDone(task)}} className={(task.done) && 'done'}>
             {task.item}
           </List.Item>
          )} 

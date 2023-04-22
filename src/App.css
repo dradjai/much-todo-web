@@ -27,11 +27,13 @@ h1 {
 
 li {
   font-size: var(--text-size);
+  cursor: pointer;
 }
 
 li.ant-list-item.done {
   text-decoration: line-through;
   background-color: lightgray;
+  
 }
 
 main {
@@ -51,6 +53,8 @@ main {
 button.ant-btn {
   background-color: purple
 }
+
+
 
 span.ant-input-affix-wrapper, input.ant-input {
   background-color: pink;
