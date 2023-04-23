@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { List } from 'antd';
+import { Button, List } from 'antd';
 
 export default function TodoList({ loading, itemList, setItemList, setLoading}) {
   
@@ -17,10 +17,28 @@ export default function TodoList({ loading, itemList, setItemList, setLoading}) 
     const newItem = {
       done: true,
       userId: "me",
-      item: item.item, //what the user typed in is "value"
+      item: item.item
     }
     const response = await fetch(`https://express-deploy-dr.web.app/items/${item.id}`, {
       method: "PATCH",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(newItem)
+    })
+    const data = await response.json()
+    setItemList(data);
+  }
+
+  const handleDelete = async (item) => {
+    
+    const newItem = {
+      done: item.done,
+      userId: "me",
+      item: item.item
+    }
+    const response = await fetch(`https://express-deploy-dr.web.app/items/${item.id}`, {
+      method: "DELETE",
       headers: {
         "Content-Type": "application/json"
       },
@@ -39,8 +57,9 @@ export default function TodoList({ loading, itemList, setItemList, setLoading}) 
         loading={loading}
         size='large'
         renderItem={(task) => (
-          <List.Item onClick={() => {handleDone(task)}} className={(task.done) && 'done'}>
+          <List.Item onClick={() => handleDone(task) } className={(task.done) && 'done'}>
             {task.item}
+            <Button onClick={() => handleDelete(task) } className='btn-remove'>Remove</Button>
           </List.Item>
          )} 
         />

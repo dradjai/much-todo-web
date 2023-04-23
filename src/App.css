@@ -30,6 +30,10 @@ li {
   cursor: pointer;
 }
 
+li:hover {
+  background-color: lightgray;
+}
+
 li.ant-list-item.done {
   text-decoration: line-through;
   background-color: lightgray;
@@ -51,7 +55,14 @@ main {
 }
 
 button.ant-btn {
-  background-color: purple
+  background-color: darkgrey;
+  color: black;
+}
+
+.btn-remove {
+  background-color: darkgrey;
+  float: right;
+
 }
 
 
