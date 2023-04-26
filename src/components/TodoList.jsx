@@ -1,25 +1,28 @@
-import { useEffect } from 'react'
+import { useEffect, useContext } from 'react'
 import { Button, List } from 'antd';
+import { UserStatus } from '../App';
 
 export default function TodoList({ loading, itemList, setItemList, setLoading}) {
   
+  const { user } = useContext(UserStatus);
+
   useEffect(() => {
-    fetch('https://express-deploy-dr.web.app/items')
+    fetch(`https://express-deploy-dr.web.app/items/${user.id}`)
       .then(resp => resp.json())
       .then(setItemList)
       .catch(alert) // we can do better
       .finally(() => setLoading(false))
-  }, [])
+  }, [user])
 
 
   const handleDone = async (item) => {
     
+    setLoading(true)
+
     const newItem = {
-      done: true,
-      userId: "me",
-      item: item.item
+      done: !item.done,
     }
-    const response = await fetch(`https://express-deploy-dr.web.app/items/${item.id}`, {
+    const response = await fetch(`https://express-deploy-dr.web.app/items/${user.id}/${item.id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json"
@@ -28,21 +31,16 @@ export default function TodoList({ loading, itemList, setItemList, setLoading}) 
     })
     const data = await response.json()
     setItemList(data);
+    setLoading(false);
   }
 
   const handleDelete = async (item) => {
     
-    const newItem = {
-      done: item.done,
-      userId: "me",
-      item: item.item
-    }
-    const response = await fetch(`https://express-deploy-dr.web.app/items/${item.id}`, {
+    const response = await fetch(`https://express-deploy-dr.web.app/items/${user.id}/${item.id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(newItem)
     })
     const data = await response.json()
     setItemList(data);
