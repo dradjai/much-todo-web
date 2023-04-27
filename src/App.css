@@ -69,8 +69,8 @@ button.ant-btn {
 
 
 span.ant-input-affix-wrapper, input.ant-input {
-  background-color: pink;
-  font-size: var(--text-size);
+  /* background-color: pink;
+  font-size: var(--text-size); */
   width: 100%;
 
 }

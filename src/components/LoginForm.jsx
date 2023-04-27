@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { UserStatus } from '../App';
-import { Button, Checkbox, Form, Input } from 'antd';
+import { Button, Checkbox, Form, Input, message } from 'antd';
 
 
 
@@ -24,11 +24,15 @@ export default function LoginForm() {
     const _user = await resp.json();
     if(_user.id){
       setUser(_user);
+      setTimeout( () => {
+        message.success('Login Success');
+      }, 0);
  
     }
     else{
-     const msg = _user.message;
-     alert(msg);
+      setTimeout( () => {
+        message.warning(_user.message);
+      }, 1000);
       
       
     }
