@@ -1,6 +1,6 @@
 import { useContext } from 'react';
-import { Button, Checkbox, Form, Input } from 'antd';
 import { UserStatus } from '../App';
+import { Button, Checkbox, Form, Input } from 'antd';
 
 
 
@@ -12,7 +12,6 @@ export default function LoginForm() {
   const { setUser } = useContext(UserStatus);
  
 
-
   const onFinish = async (values) => {
     console.log('Success:', values);
     const resp = await fetch("https://express-deploy-dr.web.app/login", {
@@ -23,9 +22,16 @@ export default function LoginForm() {
       body: JSON.stringify(values)
     });
     const _user = await resp.json();
-    setUser(_user);
+    if(_user.id){
+      setUser(_user);
  
-   
+    }
+    else{
+     const msg = _user.message;
+     alert(msg);
+      
+      
+    }
 
   }
 
@@ -34,6 +40,8 @@ export default function LoginForm() {
   };
 
   return (
+    
+    
     <>
     <h1>Login</h1>
       <Form className='form'
@@ -53,7 +61,9 @@ export default function LoginForm() {
     onFinish={onFinish}
     onFinishFailed={onFinishFailed}
     autoComplete="off"
+    
   >
+   
     <Form.Item
       label="Email"
       name="email"
@@ -102,7 +112,7 @@ export default function LoginForm() {
       </Button>
     </Form.Item>
   </Form>
-
+        
     </>
   )
 

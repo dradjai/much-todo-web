@@ -15,11 +15,13 @@ function App() {
   const [user, setUser] = useState();
 
 
+
   return (
     
     <main>
       <UserStatus.Provider value={{ user, setUser}}>
-
+       
+      
       {!user
       ? <>
         <BrowserRouter>
@@ -30,10 +32,9 @@ function App() {
         
       
           <Routes>
-        
-            <Route path="/signup" element={<Signup />}/>
-        
-            <Route path="/" element={<LoginForm/> }/>
+
+            <Route path="/signup" element={<Signup />}/>   
+            <Route path="/" element={<LoginForm /> }/>
               
           </Routes>
         </BrowserRouter>
