@@ -1,14 +1,8 @@
-import { useContext } from 'react';
 import { Button, Checkbox, Form, Input } from 'antd';
-import { UserStatus } from '../App';
-
-
-
-
 
 
 export default function Signup() {
-  const { setUser } = useContext(UserStatus);
+  
  
 
   const onFinish = async (values) => {
@@ -22,7 +16,8 @@ export default function Signup() {
       body: JSON.stringify(values)
     });
     const _user = await resp.json();
-    setUser(_user);
+    alert(_user.message);
+    
   
     
    
