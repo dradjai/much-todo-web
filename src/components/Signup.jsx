@@ -1,9 +1,10 @@
-import { Button, Checkbox, Form, Input } from 'antd';
+import { Button, Checkbox, Form, Input, message } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function Signup() {
   
- 
+ const navigate = useNavigate();
 
   const onFinish = async (values) => {
   
@@ -16,7 +17,19 @@ export default function Signup() {
       body: JSON.stringify(values)
     });
     const _user = await resp.json();
-    alert(_user.message);
+    if(_user.message !== "Registered") {
+    setTimeout( () => {
+      message.warning(_user.message);
+    }, 0);
+    return 
+  }
+
+    setTimeout( () => {
+      message.success(_user.message);
+    }, 0);
+    navigate("/");
+  
+   
     
   
     
